@@ -4,6 +4,7 @@ import { useAuth } from './hooks/useAuth'
 import { useSignIn } from './hooks/useSignIn'
 import { Board } from './components/board/Board'
 import { Button } from './components/ui/Button'
+import { CreateTaskModal } from './components/tasks/CreateTaskModal'
 import type { Task, Status } from './types'
 
 export default function App() {
@@ -68,6 +69,15 @@ export default function App() {
           onAddTask={handleAddTask}
         />
       </main>
+
+      {/* Create Task Modal */}
+      {createStatus && (
+        <CreateTaskModal
+          initialStatus={createStatus}
+          onClose={() => setCreateStatus(null)}
+        />
+      )}
+
     </div>
   )
 }
