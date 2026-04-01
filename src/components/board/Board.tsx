@@ -3,13 +3,14 @@ import {
   DndContext,
   DragOverlay,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors,
   closestCorners,
 } from '@dnd-kit/core'
 import type {
   DragEndEvent,
-  DragStartEvent
+  DragStartEvent,
 } from '@dnd-kit/core'
 import { BoardColumn } from './BoardColumn'
 import { TaskCard } from '../tasks/TaskCard'
@@ -26,10 +27,19 @@ export function Board({ onTaskClick, onAddTask }: BoardProps) {
   const { data: tasks = [], isLoading, isError } = useTasks()
   const updateStatus = useUpdateTaskStatus()
   const [activeTask, setActiveTask] = useState<Task | null>(null)
+  const [optimisticTasks, setOptimisticTasks] = useState<Task[] | null>(null)
+
+  const displayTasks = optimisticTasks ?? tasks
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
-      activationConstraint: { distance: 8 }
+      activationConstraint: { distance: 3 }
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 150,
+        tolerance: 5,
+      }
     })
   )
 
@@ -42,7 +52,10 @@ export function Board({ onTaskClick, onAddTask }: BoardProps) {
     const { active, over } = event
     setActiveTask(null)
 
-    if (!over) return
+    if (!over) {
+      setOptimisticTasks(null)
+      return
+    }
 
     const taskId = active.id as string
     const overId = over.id as string
@@ -50,15 +63,31 @@ export function Board({ onTaskClick, onAddTask }: BoardProps) {
     const task = tasks.find(t => t.id === taskId)
     if (!task) return
 
-    // Check if dropped over a column directly
     const isColumn = COLUMNS.some(col => col.id === overId)
     const newStatus = isColumn
       ? overId as Status
       : tasks.find(t => t.id === overId)?.status
 
-    if (!newStatus || newStatus === task.status) return
+    if (!newStatus || newStatus === task.status) {
+      setOptimisticTasks(null)
+      return
+    }
 
-    updateStatus.mutate({ taskId, status: newStatus })
+    // Apply optimistic update immediately
+    setOptimisticTasks(
+      tasks.map(t => t.id === taskId ? { ...t, status: newStatus } : t)
+    )
+
+    // Then sync to database
+    updateStatus.mutate(
+    { taskId, status: newStatus },
+    {
+        onError: () => setOptimisticTasks(null),
+    }
+    )
+
+    // Clear optimistic state after cache has time to update
+    setTimeout(() => setOptimisticTasks(null), 300)
   }
 
   if (isLoading) {
@@ -89,7 +118,7 @@ export function Board({ onTaskClick, onAddTask }: BoardProps) {
           <BoardColumn
             key={column.id}
             column={column}
-            tasks={tasks.filter(t => t.status === column.id)}
+            tasks={displayTasks.filter(t => t.status === column.id)}
             onAddTask={onAddTask}
             onTaskClick={onTaskClick}
           />
