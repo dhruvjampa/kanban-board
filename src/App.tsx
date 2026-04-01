@@ -39,7 +39,7 @@ export default function App() {
       <header className="border-b border-slate-800 px-6 py-4">
         <div className="max-w-screen-2xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-lg bg-violet-600 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-jungle-green-500 flex items-center justify-center">
               <span className="text-white text-xs font-bold">K</span>
             </div>
             <h1 className="text-slate-100 font-semibold text-sm">

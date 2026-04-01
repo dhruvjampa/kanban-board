@@ -121,7 +121,7 @@ export function TaskDetailModal({ task, onClose }: TaskDetailModalProps) {
                 <select
                   value={priority}
                   onChange={e => setPriority(e.target.value as Priority)}
-                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500"
+                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-jungle-green-500"
                 >
                   <option value="low">Low</option>
                   <option value="normal">Normal</option>
@@ -143,7 +143,7 @@ export function TaskDetailModal({ task, onClose }: TaskDetailModalProps) {
               <select
                 value={status}
                 onChange={e => setStatus(e.target.value as Status)}
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500"
+                className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-jungle-green-500"
               >
                 {COLUMNS.map(col => (
                   <option key={col.id} value={col.id}>{col.title}</option>
@@ -204,7 +204,7 @@ export function TaskDetailModal({ task, onClose }: TaskDetailModalProps) {
                         className={cn(
                           'flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors',
                           isAssigned
-                            ? 'bg-violet-500/20 text-violet-300 border border-violet-500/30'
+                            ? 'bg-jungle-green-500/20 text-jungle-green-300 border border-jungle-green-500/30'
                             : 'bg-slate-800 text-slate-400 border border-slate-700 hover:border-slate-500'
                         )}
                       >

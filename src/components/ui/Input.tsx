@@ -23,7 +23,7 @@ export function Input({ label, error, className, ...props }: InputProps) {
         className={cn(
           'w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2',
           'text-sm text-slate-100 placeholder:text-slate-500',
-          'focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent',
+          'focus:outline-none focus:ring-2 focus:ring-jungle-green-500 focus:border-transparent',
           'disabled:opacity-50 disabled:cursor-not-allowed',
           error && 'border-rose-500 focus:ring-rose-500',
           className
@@ -49,7 +49,7 @@ export function Textarea({ label, error, className, ...props }: TextareaProps) {
         className={cn(
           'w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2',
           'text-sm text-slate-100 placeholder:text-slate-500',
-          'focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent',
+          'focus:outline-none focus:ring-2 focus:ring-jungle-green-500 focus:border-transparent',
           'disabled:opacity-50 disabled:cursor-not-allowed resize-none',
           error && 'border-rose-500 focus:ring-rose-500',
           className

@@ -48,7 +48,7 @@ export function BoardColumn({
         className={cn(
           'flex flex-col gap-2 flex-1 rounded-xl p-2 min-h-[500px] transition-colors',
           'bg-slate-900 border border-slate-800',
-          isOver && 'border-violet-500/50 bg-violet-500/5'
+          isOver && 'border-jungle-green-500/50 bg-jungle-green-500/5'
         )}
       >
         <SortableContext
