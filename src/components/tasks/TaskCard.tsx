@@ -1,6 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { Calendar, Flag } from 'lucide-react'
+import { Calendar } from 'lucide-react'
 import { Badge } from '../ui/Badge'
 import { Avatar } from '../ui/Avatar'
 import { cn } from '../../utils/cn'
