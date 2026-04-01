@@ -170,7 +170,7 @@ export function TaskDetailModal({ task, onClose }: TaskDetailModalProps) {
           /* View Mode */
           <>
             {task.description && (
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <p className="text-sm text-slate-400 leading-relaxed break-words">
                 {task.description}
               </p>
             )}

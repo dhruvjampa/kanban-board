@@ -27,8 +27,17 @@ export function TeamMemberModal({ onClose }: TeamMemberModalProps) {
 
   async function handleCreate() {
     if (!name.trim()) {
-      setError('Name is required')
-      return
+        setError('Name is required')
+        return
+    }
+
+    const duplicate = members.some(
+        m => m.name.toLowerCase() === name.trim().toLowerCase()
+    )
+
+    if (duplicate) {
+        setError('A team member with this name already exists')
+        return
     }
 
     await createMember.mutateAsync({ name: name.trim(), color })

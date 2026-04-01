@@ -56,13 +56,13 @@ export function TaskCard({ task, onClick }: TaskCardProps) {
       )}
     >
       {/* Title */}
-      <p className="text-sm text-slate-100 font-medium leading-snug">
+      <p className="text-sm text-slate-100 font-medium leading-snug break-words">
         {task.title}
       </p>
 
       {/* Description */}
       {task.description && (
-        <p className="text-xs text-slate-400 leading-snug line-clamp-2">
+        <p className="text-xs text-slate-400 leading-snug line-clamp-2 overflow-hidden">
           {task.description}
         </p>
       )}
