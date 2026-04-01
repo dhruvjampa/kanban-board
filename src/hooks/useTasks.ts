@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
-import type { Task, Status } from '../types'
+import type { Task, Status, Priority } from '../types'
 
 export function useTasks() {
   return useQuery({
@@ -63,6 +63,54 @@ export function useCreateTask() {
       const { error } = await supabase
         .from('tasks')
         .insert({ ...task, user_id: user.id })
+
+      if (error) throw error
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] })
+    }
+  })
+}
+
+export function useDeleteTask() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (taskId: string) => {
+      const { error } = await supabase
+        .from('tasks')
+        .delete()
+        .eq('id', taskId)
+
+      if (error) throw error
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] })
+    }
+  })
+}
+
+export function useUpdateTask() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async ({
+      taskId,
+      updates,
+    }: {
+      taskId: string
+      updates: {
+        title?: string
+        description?: string | null
+        priority?: Priority
+        due_date?: string | null
+        status?: Status
+      }
+    }) => {
+      const { error } = await supabase
+        .from('tasks')
+        .update(updates)
+        .eq('id', taskId)
 
       if (error) throw error
     },

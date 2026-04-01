@@ -1,10 +1,12 @@
 import { useState } from 'react'
-import { Plus } from 'lucide-react'
+import { Plus, Users } from 'lucide-react'
 import { useAuth } from './hooks/useAuth'
 import { useSignIn } from './hooks/useSignIn'
 import { Board } from './components/board/Board'
 import { Button } from './components/ui/Button'
 import { CreateTaskModal } from './components/tasks/CreateTaskModal'
+import { TaskDetailModal } from './components/tasks/TaskDetailModal'
+import { TeamMemberModal } from './components/tasks/TeamMemberModal'
 import type { Task, Status } from './types'
 
 export default function App() {
@@ -13,14 +15,7 @@ export default function App() {
 
   const [createStatus, setCreateStatus] = useState<Status | null>(null)
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
-
-  function handleAddTask(status: Status) {
-    setCreateStatus(status)
-  }
-
-  function handleTaskClick(task: Task) {
-    setSelectedTask(task)
-  }
+  const [showTeam, setShowTeam] = useState(false)
 
   if (loading) {
     return (
@@ -51,33 +46,53 @@ export default function App() {
               Kanban Board
             </h1>
           </div>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => handleAddTask('todo')}
-          >
-            <Plus className="w-4 h-4" />
-            New Task
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowTeam(true)}
+            >
+              <Users className="w-4 h-4" />
+              Team
+            </Button>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => setCreateStatus('todo')}
+            >
+              <Plus className="w-4 h-4" />
+              New Task
+            </Button>
+          </div>
         </div>
       </header>
 
       {/* Board */}
       <main className="px-6 py-6 max-w-screen-2xl mx-auto">
         <Board
-          onTaskClick={handleTaskClick}
-          onAddTask={handleAddTask}
+          onTaskClick={setSelectedTask}
+          onAddTask={setCreateStatus}
         />
       </main>
 
-      {/* Create Task Modal */}
+      {/* Modals */}
       {createStatus && (
         <CreateTaskModal
           initialStatus={createStatus}
           onClose={() => setCreateStatus(null)}
         />
       )}
-
+      {selectedTask && (
+        <TaskDetailModal
+          task={selectedTask}
+          onClose={() => setSelectedTask(null)}
+        />
+      )}
+      {showTeam && (
+        <TeamMemberModal
+          onClose={() => setShowTeam(false)}
+        />
+      )}
     </div>
   )
 }
