@@ -3,7 +3,6 @@
 A beautiful, fully-featured Kanban-style task board built with React, TypeScript, and Supabase. Inspired by Linear and Asana.
 
 🔗 **Live Demo:** https://kanban-board-omega-five.vercel.app/
-📁 **Repository:** https://github.com/dhruvjampa/kanban-board
 
 ---
 
@@ -27,7 +26,7 @@ A beautiful, fully-featured Kanban-style task board built with React, TypeScript
 
 | Layer | Technology |
 |---|---|
-| Frontend | React 18 + TypeScript |
+| Frontend | React + TypeScript |
 | Build Tool | Vite |
 | Styling | Tailwind CSS v3 |
 | Drag and Drop | @dnd-kit |
